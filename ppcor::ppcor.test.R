@@ -1,12 +1,9 @@
+library(tidyverse)
 
 data <- read.table("clipboard", header = T)
 
-head(data)
-
-### 设置抽样
-a <- combn(5, 2)
-
-a %>%
+### 设置组合
+combn(5, 2) %>%
   t() %>% 
   as.data.frame() -> index
 
@@ -23,11 +20,12 @@ data_ana <- data_new[, 8:12]
 sp_names <- names(data_ana)
 
 
-###建立空数据框用来存放循环数据
+### 建立空数据框用来存放循环数据
 res_hh <- array(data = NA, dim = c(10, 11)) %>% as.data.frame()
 
 
 ### 循环数据
+
 for(i in 1:10){
   
   index1 <- c(index[i, 1], index[i, 2])
