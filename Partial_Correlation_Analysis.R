@@ -1,4 +1,5 @@
 library(tidyverse)
+library(ppcor)
 
 data <- read.table("clipboard", header = T)
 
@@ -7,16 +8,12 @@ combn(5, 2) %>%
   t() %>% 
   as.data.frame() -> index
 
-### 数据转换，长变宽
 data %>% 
   pivot_wider(values_from = coverage, names_from = species) %>% 
   mutate_at(vars(En:Kh), ~ifelse(is.na(.) == T, 0, .)) -> data_new
 
-### 选取数据只含有物种
 data_ana <- data_new[, 8:12]
 
-
-### 提取物种名称
 sp_names <- names(data_ana)
 
 
@@ -24,7 +21,7 @@ sp_names <- names(data_ana)
 res_hh <- array(data = NA, dim = c(10, 11)) %>% as.data.frame()
 
 
-### 循环数据
+### 循环计算并输出数据
 
 for(i in 1:10){
   
@@ -44,7 +41,8 @@ for(i in 1:10){
   
 }
 
-
+### 最终结果
+res_hh
 
 
 
